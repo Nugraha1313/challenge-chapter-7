@@ -1,0 +1,884 @@
+openapi: 3.0.1
+info:
+  title: Manufacture API
+  description: Aplikasi Manufacture
+  contact:
+    email: aulia.nugraha13@gmail.com
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000
+tags:
+  - name: Components
+    description: Components of products
+  - name: Products
+    description: Products
+  - name: Suppliers
+    description: Suppliers of components
+paths:
+  /components:
+    get:
+      tags:
+        - Components
+      summary: Get All Components
+      description: Get All Components
+      operationId: getComponents
+      responses:
+        "200":
+          description: Success get all Component
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      component:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: Kayu
+                          email:
+                            type: string
+                            example: Merupakan komponen kerangka utama
+    post:
+      tags:
+        - Components
+      summary: Create New Components
+      description: Create New Components
+      operationId: createComponent
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Besi
+                description:
+                  type: string
+                  example: Merupakan Besi
+      responses:
+        "201":
+          description: Success create new Component
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      component:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: Kayu
+                          description:
+                            type: string
+                            example: Merupakan komponen kerangka utama
+        "400":
+          description: name is required
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: name is required
+                  data:
+                    type: object
+
+
+  /components/{id}:
+    get:
+      tags:
+        - Components
+      summary: Find component by ID
+      description: Find Component by ID
+      operationId: getComponentById
+      parameters:
+        - name: id
+          in: path
+          description: ID of order that needs to be fetched
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Success get Component detail
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      component:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: Kayu
+                          email:
+                            type: string
+                            example: Merupakan komponen kerangka utama
+        "400":
+          description: Can't find Component with id given
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: Can't find Component with id given
+    put:
+      tags:
+        - Components
+      summary: Update Component
+      description: Update Component
+      operationId: updateComponent
+      parameters:
+        - name: id
+          in: path
+          description: ID of order that needs to be fetched
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Besi
+                description:
+                  type: string
+                  example: Merupakan Besi
+      responses:
+        "201":
+          description: Success update Component
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      component:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: Kayu
+                          description:
+                            type: string
+                            example: Merupakan komponen kerangka utama
+        "400":
+          description: Can't find Component with id given
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: Can't find Component with id given
+    delete:
+      tags:
+        - Components
+      summary: Delete Component by ID
+      description: Delete Component by ID
+      operationId: deleteComponentById
+      parameters:
+        - name: id
+          in: path
+          description: ID of order that needs to be fetched
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Success delete Component detail
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      component:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: Kayu
+                          email:
+                            type: string
+                            example: Merupakan komponen kerangka utama
+        "400":
+          description: Can't find Component with id given
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: Can't find Component with id given
+
+  /products:
+    get:
+      tags:
+        - Products
+      summary: Get All Products
+      description: Get All Products
+      operationId: getProducts
+      responses:
+        "200":
+          description: Success get all product
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      component:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: Gergaji Besi
+                          quantity:
+                            type: integer
+                            example: 3
+    post:
+      tags:
+        - Products
+      summary: Create New Products
+      description: Create New Products
+      operationId: createProduct
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Besi
+                quantity:
+                  type: integer
+                  example: 3
+                component_id:
+                  type: integer
+                  example: 1
+      responses:
+        "201":
+          description: Success create new Product
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      component:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: Gergaji Besi
+                          quantity:
+                            type: integer
+                            example: 1
+                      product_components:
+                        type: object
+                        properties:
+                          product_id:
+                            type: integer
+                            example: 1
+                          component_id:
+                            type: integer
+                            example: 2
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: name,quantity,component product is must provided
+                  data:
+                    type: object
+    
+  /products/{id}:
+    get:
+      tags:
+        - Products
+      summary: Find product by ID
+      description: Find Component by ID
+      operationId: getProductById
+      parameters:
+        - name: id
+          in: path
+          description: ID of order that needs to be fetched
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Success get product detail
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      product:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: Gergaji Besi
+                          quantity:
+                            type: integer
+                            example: 3
+        "400":
+          description: Can't find Product with id given
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: Can't find Product with id given
+    put:
+      tags:
+        - Products
+      summary: Update Product
+      description: Update Product
+      operationId: updateProduct
+      parameters:
+        - name: id
+          in: path
+          description: ID of order that needs to be fetched
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Gergaji Besi
+                quantity:
+                  type: integer
+                  example: 100
+                component_id:
+                  type: integer
+                  example: 2
+      responses:
+        "201":
+          description: Success update Product
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      product:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: Gergaji Kayu
+                          quantity:
+                            type: integer
+                            example: 120
+                      product_components:
+                        type: object
+                        properties:
+                          product_id:
+                            type: integer
+                            example: 1
+                          component_id:
+                            type: integer
+                            example: 2
+        "400":
+          description: Can't find Product with id given
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: Can't find Product with id given
+    delete:
+      tags:
+        - Products
+      summary: Delete Product by ID
+      description: Delete Product by ID
+      operationId: deleteProductById
+      parameters:
+        - name: id
+          in: path
+          description: ID of order that needs to be fetched
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Success delete product detail
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      product:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: Gergaji Besi
+                          quantity:
+                            type: integer
+                            example: 3
+        "400":
+          description: Can't find Product with id given
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: Can't find Product with id given
+
+  /suppliers:
+    get:
+      tags:
+        - Suppliers
+      summary: Get All Suppliers
+      description: Get All Suppliers
+      operationId: getSuppliers
+      responses:
+        "200":
+          description: Success get all supplier
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      component:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: PT. Bagus Kayu
+                          address:
+                            type: string
+                            example: Jalan Residen No.2
+    post:
+      tags:
+        - Suppliers
+      summary: Create New Supplier
+      description: Create New Supplier
+      operationId: createSupplier
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: PT. Besi Budi Leluhur
+                address:
+                  type: string
+                  example: JL. Sematang Borang No.13
+                component_id:
+                  type: integer
+                  example: 1
+      responses:
+        "201":
+          description: Success create new Supplier
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      supplier:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: PT. Besi Sejati
+                          address:
+                            type: string
+                            example: JL. Sematang Borang No.13
+                      component_suppliers:
+                        type: object
+                        properties:
+                          component_id:
+                            type: integer
+                            example: 1
+                          supplier_id:
+                            type: integer
+                            example: 2
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: name,address,component_id is must provided
+                  data:
+                    type: object
+
+  /suppliers/{id}:
+    get:
+      tags:
+        - Suppliers
+      summary: Find supplier by ID
+      description: Find supplier by ID
+      operationId: getSupplierById
+      parameters:
+        - name: id
+          in: path
+          description: ID of order that needs to be fetched
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Success get supplier detail
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      supplier:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: PT. Bagus Kayu
+                          address:
+                            type: string
+                            example: JL. Sematang Borang No.2
+        "400":
+          description: Can't find Supplier with id given
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: Can't find Supplier with id given
+    put:
+      tags:
+        - Suppliers
+      summary: Update Supplier
+      description: Update Supplier
+      operationId: updateSupplier
+      parameters:
+        - name: id
+          in: path
+          description: ID of order that needs to be fetched
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: PT. Besi yo Wesi
+                address:
+                  type: string
+                  example: JL. Soeakarno No.2
+                component_id:
+                  type: integer
+                  example: 2
+      responses:
+        "201":
+          description: Success update Product
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      component:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: Gergaji Kayu
+                          quantity:
+                            type: integer
+                            example: 120
+                      component_suppliers:
+                        type: object
+                        properties:
+                          component_id:
+                            type: integer
+                            example: 1
+                          supplier_id:
+                            type: integer
+                            example: 2
+        "400":
+          description: Can't find Component with id given
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: Can't find Component with id given
+    delete:
+      tags:
+        - Suppliers
+      summary: Delete Supplier by ID
+      description: Delete Supplier by ID
+      operationId: deleteSupplierById
+      parameters:
+        - name: id
+          in: path
+          description: ID of order that needs to be fetched
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Success delete product detail
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      product:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: PT. Kayu Manis
+                          address:
+                            type: string
+                            example: JL. Budi Leluhur
+        "400":
+          description: Can't find Supplier with id given
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: Can't find Supplier with id given
