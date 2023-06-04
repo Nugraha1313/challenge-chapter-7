@@ -1,7 +1,7 @@
 ## How to Running
 
 ```bash
-git clone https://github.com/Nugraha1313/binar-challenge.git
+git clone https://github.com/Nugraha1313/challenge-chapter-7.git
 npm install
 cp .env.example .env
 sequelize db:create
@@ -11,7 +11,11 @@ sequelize db:seed:all
 
 ## Deployment
 ### 1. Development
-[link](manufacture-develop.up.railway.app)
+<a href="https://manufacture-develop.up.railway.app">LINK</a>
 
 ### 2. Production
-[link](manufacture-production.up.railway.app)
+<a href="https://manufacture-production.up.railway.app">LINK</a>
+
+### Account Testing
+email: admin@gmail.com <br>
+password: password

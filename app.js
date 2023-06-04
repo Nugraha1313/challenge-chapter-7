@@ -1,17 +1,17 @@
-require('dotenv').config()
+require("dotenv").config();
+
 const express = require("express");
 const Sentry = require("@sentry/node");
-const app = express();
-const port = 8000;
-
 const morgan = require("morgan");
 const swaggerUI = require("swagger-ui-express");
 const YAML = require("yaml");
 const fs = require("fs");
 const cors = require("cors");
-
-const file = fs.readFileSync('./docs.yaml', 'utf8');
+const file = fs.readFileSync("./docs.yaml", "utf8");
 const swaggerDocument = YAML.parse(file);
+const expressListRoutes = require("express-list-routes");
+
+const app = express();
 const router = require("./routes");
 
 const { SENTRY_DSN, ENVIRONMENT } = process.env;
@@ -34,10 +34,11 @@ Sentry.init({
   tracesSampleRate: 1.0,
 });
 
-
+app.set("view engine", "ejs");
 app.use(morgan("dev"));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 // RequestHandler creates a separate execution context, so that all
 // transactions/spans/breadcrumbs are isolated across requests
 app.use(Sentry.Handlers.requestHandler());
@@ -46,6 +47,22 @@ app.use(Sentry.Handlers.tracingHandler());
 
 app.use(router);
 
+let list = expressListRoutes(router);
+let data = []
+for(let i = 0; i < list.length; i++){
+  data[i] = `[${list[i].method}]` + ` ${list[i].path}` 
+}
+
+// console.log(data)
+
+router.get("/", (req, res) =>
+  res.status(200).json({
+    // message: "Welcome to Manufacture API, there is 3 Endpoint: /components, /products, /suppliers",
+    message: `Welcome to Manufacture API, there is Endpoints: ${data}`,
+  })
+);
+
+// console.log(list)
 // The error handler must be before any other error middleware and after all controllers
 app.use(Sentry.Handlers.errorHandler());
 
@@ -63,6 +80,4 @@ app.use((err, req, res, next) => {
   });
 });
 
-//
-// app.listen(port, () => console.log("Port " + port + " is running"));
-module.exports = app
+module.exports = app;
