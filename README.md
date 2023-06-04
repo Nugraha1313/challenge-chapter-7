@@ -11,10 +11,10 @@ sequelize db:seed:all
 
 ## Deployment
 ### 1. Development
-<a href="https://manufacture-develop.up.railway.app">LINK</a>
+<a href="https://manufacture-2-develop.up.railway.app">LINK</a>
 
 ### 2. Production
-<a href="https://manufacture-production.up.railway.app">LINK</a>
+<a href="https://manufacture-2-production.up.railway.app/">LINK</a>
 
 ### Account Testing
 email: admin@gmail.com <br>
