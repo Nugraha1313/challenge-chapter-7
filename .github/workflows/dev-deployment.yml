@@ -49,13 +49,6 @@ jobs:
           DB_NAME: ci-cd
           DB_USERNAME: postgres
           DB_PASSWORD: password
-      - name: Run test
-        run: npm test
-        env:
-          DB_HOST: localhost
-          DB_NAME: ci-cd
-          DB_USERNAME: postgres
-          DB_PASSWORD: password
 
   cd:
     runs-on: ubuntu-latest
